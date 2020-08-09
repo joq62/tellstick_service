@@ -28,6 +28,8 @@
 %% External exports
 -export([restart/0,
 	 get_all_info/0,
+	 read_sensor/1,
+%	 set_device/1,
 	 set_state/1,
 	 start/0,
 	 stop/0]).
@@ -48,6 +50,9 @@ get_all_info()->
     gen_server:call(?MODULE, {get_all_info},infinity).
 set_state(Cmd)->
      gen_server:call(?MODULE, {set_state,Cmd},infinity).
+read_sensor(Id)->
+     gen_server:call(?MODULE, {read_sensor,Id},infinity).
+
 %% ====================================================================
 %% Server functions
 %% ====================================================================
@@ -81,6 +86,10 @@ handle_call({restart}, _From, State) ->
  %   Reply=ok,
     {reply, Reply, State};
 
+
+handle_call({read_sensor,Id}, _From, State) ->
+    Reply=rpc:call(node(),read_sensor,tolk,[Id]),
+    {reply, Reply, State};
 
 handle_call({set_state,Cmd}, _From, State) ->
     Reply=os:cmd(Cmd),
