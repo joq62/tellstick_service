@@ -35,7 +35,12 @@
 %% Returns:ok|error
 %% --------------------------------------------------------------------
 set_device(Id,Value)->
-    ok.
+    case lists:keyfind(Id,2,?DEVICES) of
+	false->
+	    {error,[time(),?MODULE,?LINE,Id]};
+	{Num,Id,_CurrentValue}->
+	    os:cmd("tdtool --"++Num++" "++Value)
+    end.
 
 read_sensor(Id)->
     [{device_info,_DeviceInfo},{sensor_info,SensorInfo}]=get_all_info(),
