@@ -88,7 +88,7 @@ handle_call({restart}, _From, State) ->
 
 
 handle_call({read_sensor,Id}, _From, State) ->
-    Reply=rpc:call(node(),read_sensor,tolk,[Id]),
+    Reply=rpc:call(node(),tolk,read_sensor,[Id]),
     {reply, Reply, State};
 
 handle_call({set_state,Cmd}, _From, State) ->
