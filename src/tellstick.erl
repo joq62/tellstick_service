@@ -40,7 +40,7 @@ set_device(Id,Value)->
     case lists:keyfind(Id,2,?DEVICES) of
 	false->
 	    {error,[time(),?MODULE,?LINE,Id]};
-	{Num,Id,_CurrentValue}->
+	{Num,Id}->
 	    io:format("~p~n",[{Num,Id,Value,?MODULE,?LINE}]),
 	    os:cmd("tdtool --"++Value++" "++Num);
 	Err ->
