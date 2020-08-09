@@ -21,6 +21,7 @@
 %% External exports
 %% --------------------------------------------------------------------
 -export([read_sensor/1,
+	 read_device/1,
 	 set_device/2,
 	 get_all_info/0]).
 %%
@@ -42,8 +43,11 @@ set_device(Id,Value)->
 	    os:cmd("tdtool --"++Num++" "++Value)
     end.
 
+read_device(Id)->
+    [{device_info,DeviceInfo},{sensor_info,_}]=get_all_info(),
+    lists:keyfind(Id,2,DeviceInfo).
 read_sensor(Id)->
-    [{device_info,_DeviceInfo},{sensor_info,SensorInfo}]=get_all_info(),
+    [{device_info,_},{sensor_info,SensorInfo}]=get_all_info(),
     lists:keyfind(Id,1,SensorInfo).
 
 

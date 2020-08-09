@@ -29,6 +29,7 @@
 -export([restart/0,
 	 get_all_info/0,
 	 read_sensor/1,
+	 read_device/1,
 	 set_device/2,
 	 start/0,
 	 stop/0]).
@@ -49,6 +50,8 @@ get_all_info()->
     gen_server:call(?MODULE, {get_all_info},infinity).
 set_device(Id,Value)->
      gen_server:call(?MODULE, {set_device,Id,Value},infinity).
+read_device(Id)->
+     gen_server:call(?MODULE, {read_device,Id},infinity).
 read_sensor(Id)->
      gen_server:call(?MODULE, {read_sensor,Id},infinity).
 
@@ -88,6 +91,10 @@ handle_call({restart}, _From, State) ->
 
 handle_call({read_sensor,Id}, _From, State) ->
     Reply=rpc:call(node(),tellstick,read_sensor,[Id]),
+    {reply, Reply, State};
+
+handle_call({read_device,Id}, _From, State) ->
+    Reply=rpc:call(node(),tellstick,read_device,[Id]),
     {reply, Reply, State};
 
 handle_call({set_device,Id,Value}, _From, State) ->
