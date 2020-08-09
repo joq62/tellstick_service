@@ -40,7 +40,7 @@ set_device(Id,Value)->
 	false->
 	    {error,[time(),?MODULE,?LINE,Id]};
 	{Num,Id,_CurrentValue}->
-	    os:cmd("tdtool --"++Num++" "++Value);
+	    os:cmd("tdtool --"++Value++" "++Num);
 	Err ->
 	    Err
     end.
