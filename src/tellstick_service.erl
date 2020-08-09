@@ -96,7 +96,7 @@ handle_call({set_state,Cmd}, _From, State) ->
     {reply, Reply, State};
 
 handle_call({get_all_info}, _From, State) ->
-    Reply=os:cmd("tdtool --list"),
+    Reply=rpc:call(node(),tolk,get_all_info,[]),
     {reply, Reply, State};
 
 handle_call({stop}, _From, State) ->
