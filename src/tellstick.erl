@@ -44,6 +44,7 @@ set_device(Id,Value)->
 	    io:format("~p~n",[{Num,Id,Value,?MODULE,?LINE}]),
 	    os:cmd("tdtool --"++Value++" "++Num);
 	Err ->
+	    io:format("~p~n",[{Err,?MODULE,?LINE}]),
 	    Err
     end.
 
