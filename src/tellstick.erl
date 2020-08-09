@@ -5,7 +5,7 @@
 %%% Description :
 
 %%% -------------------------------------------------------------------
--module(tolk).
+-module(tellstick).
 
 %% --------------------------------------------------------------------
 %% Include files
@@ -21,7 +21,8 @@
 %% External exports
 %% --------------------------------------------------------------------
 -export([read_sensor/1,
-	get_all_info/0]).
+	 set_device/2,
+	 get_all_info/0]).
 %%
 %% API Functions
 %%
@@ -33,6 +34,9 @@
 %% Description: fun x skeleton 
 %% Returns:ok|error
 %% --------------------------------------------------------------------
+set_device(Id,Value)->
+    ok.
+
 read_sensor(Id)->
     [{device_info,_DeviceInfo},{sensor_info,SensorInfo}]=get_all_info(),
     lists:keyfind(Id,1,SensorInfo).

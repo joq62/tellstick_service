@@ -32,6 +32,6 @@
 %% --------------------------------------------------------------------
 start()->
     io:format("~p~n",[{?LINE,rpc:call('varmdo_1@rpi2',tellstick_service,get_all_info,[])}]),
-    io:format("~p~n",[{?LINE,rpc:call('varmdo_1@rpi2',tolk,read_sensor,["Huset"])}]),    
+    io:format("~p~n",[{?LINE,rpc:call('varmdo_1@rpi2',tellstick_service,read_sensor,["Huset"])}]),    
     init:stop(),
     ok.

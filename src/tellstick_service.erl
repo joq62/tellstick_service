@@ -29,8 +29,7 @@
 -export([restart/0,
 	 get_all_info/0,
 	 read_sensor/1,
-%	 set_device/1,
-	 set_state/1,
+	 set_device/2,
 	 start/0,
 	 stop/0]).
 %% gen_server callbacks
@@ -48,8 +47,8 @@ restart()->
       gen_server:call(?MODULE, {restart},infinity).  
 get_all_info()->
     gen_server:call(?MODULE, {get_all_info},infinity).
-set_state(Cmd)->
-     gen_server:call(?MODULE, {set_state,Cmd},infinity).
+set_device(Id,Value)->
+     gen_server:call(?MODULE, {set_device,Id,Value},infinity).
 read_sensor(Id)->
      gen_server:call(?MODULE, {read_sensor,Id},infinity).
 
@@ -88,15 +87,15 @@ handle_call({restart}, _From, State) ->
 
 
 handle_call({read_sensor,Id}, _From, State) ->
-    Reply=rpc:call(node(),tolk,read_sensor,[Id]),
+    Reply=rpc:call(node(),tellstick,read_sensor,[Id]),
     {reply, Reply, State};
 
-handle_call({set_state,Cmd}, _From, State) ->
-    Reply=os:cmd(Cmd),
+handle_call({set_device,Id,Value}, _From, State) ->
+    Reply=rpc:call(node(),tellstick,set_device,[Id,Value]),
     {reply, Reply, State};
 
 handle_call({get_all_info}, _From, State) ->
-    Reply=rpc:call(node(),tolk,get_all_info,[]),
+    Reply=rpc:call(node(),tellstick,get_all_info,[]),
     {reply, Reply, State};
 
 handle_call({stop}, _From, State) ->
