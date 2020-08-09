@@ -36,10 +36,12 @@
 %% Returns:ok|error
 %% --------------------------------------------------------------------
 set_device(Id,Value)->
+    io:format("~p~n",[{Id,Value,?MODULE,?LINE}]),
     case lists:keyfind(Id,2,?DEVICES) of
 	false->
 	    {error,[time(),?MODULE,?LINE,Id]};
 	{Num,Id,_CurrentValue}->
+	    io:format("~p~n",[{Num,Id,Value,?MODULE,?LINE}]),
 	    os:cmd("tdtool --"++Value++" "++Num);
 	Err ->
 	    Err
